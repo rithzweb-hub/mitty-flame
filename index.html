@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mitti & Flame - Clay-Pot Dining</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Sora:wght@400;500;600&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-terracotta: #C65D3B;
+            --color-charcoal: #1E1E1E;
+            --color-beige: #F5E9DC;
+            --color-olive: #6B705C;
+            --color-gold: #C2A878;
+            --color-light: #FAFAFA;
+            --color-border: #E8DFD0;
+            --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --transition-slow: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Sora', sans-serif;
+            background-color: var(--color-light);
+            color: var(--color-charcoal);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ===== NAVBAR ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(250, 250, 250, 0.95);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            padding: 1.2rem 2rem;
+            border-bottom: 1px solid transparent;
+            transition: var(--transition);
+        }
+
+        nav.scrolled {
+            background-color: rgba(250, 250, 250, 0.98);
+            border-bottom-color: var(--color-border);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-terracotta);
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            color: var(--color-charcoal);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--color-terracotta);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--color-terracotta);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 2px;
+            background-color: var(--color-charcoal);
+            transition: var(--transition);
+            border-radius: 1px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background-color: var(--color-light);
+                flex-direction: column;
+                gap: 0;
+                padding: 1rem;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease-out;
+                border-bottom: 1px solid var(--color-border);
+            }
+
+            .nav-links.active {
+                max-height: 350px;
+            }
+
+            .nav-links a {
+                padding: 1rem 1.5rem;
+                border-bottom: 1px solid var(--color-border);
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, #FAFAFA 0%, #F5E9DC 100%);
+            position: relative;
+            overflow: hidden;
+            margin-top: 60px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(198, 93, 59, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(107, 112, 92, 0.06) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 25s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(30px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900;
+            color: var(--color-charcoal);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--color-olive);
+            margin-bottom: 2.5rem;
+            font-weight: 400;
+            max-width: 500px;
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background-color: var(--color-terracotta);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: 2px solid var(--color-terracotta);
+            border-radius: 4px;
+            transition: var(--transition-slow);
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background-color: var(--color-charcoal);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: var(--transition-slow);
+            z-index: -1;
+        }
+
+        .cta-button:hover {
+            color: var(--color-terracotta);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(198, 93, 59, 0.2);
+        }
+
+        .cta-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== ABOUT SECTION ===== */
+        .about {
+            padding: 6rem 2rem;
+            background-color: white;
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--color-charcoal);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .about-text p {
+            color: var(--color-olive);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        .about-text .tagline {
+            color: var(--color-terracotta);
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-top: 2rem;
+            letter-spacing: 0.5px;
+        }
+
+        .about-visual {
+            height: 450px;
+            background: linear-gradient(135deg, var(--color-terracotta) 0%, var(--color-gold) 100%);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateX(30px);
+        }
+
+        .about-visual img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .about-visual.visible {
+            animation: slideIn 0.8s ease-out forwards;
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .about-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 4rem 1rem;
+            }
+
+            .about-visual {
+                height: 300px;
+            }
+
+            .about-text h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* ===== EXPERIENCE SECTION ===== */
+        .experience {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #FAFAFA 0%, #F5E9DC 100%);
+        }
+
+        .experience-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            color: var(--color-charcoal);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--color-olive);
+            font-size: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid var(--color-border);
+            transition: var(--transition-slow);
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(198, 93, 59, 0.1);
+            border-color: var(--color-terracotta);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(198, 93, 59, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            transition: var(--transition);
+        }
+
+        .card:hover .card-icon {
+            background-color: rgba(198, 93, 59, 0.2);
+            transform: scale(1.1);
+        }
+
+        .card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--color-charcoal);
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            color: var(--color-olive);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        /* ===== MENU SECTION ===== */
+        .menu {
+            padding: 6rem 2rem;
+            background: white;
+        }
+
+        .menu-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .menu-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .menu-tab {
+            padding: 0.8rem 2rem;
+            background: transparent;
+            border: 2px solid var(--color-border);
+            color: var(--color-charcoal);
+            cursor: pointer;
+            font-weight: 600;
+            border-radius: 4px;
+            transition: var(--transition);
+            font-size: 0.95rem;
+        }
+
+        .menu-tab.active {
+            background-color: var(--color-terracotta);
+            color: white;
+            border-color: var(--color-terracotta);
+        }
+
+        .menu-tab:hover {
+            border-color: var(--color-terracotta);
+            color: var(--color-terracotta);
+        }
+
+        .menu-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .menu-item {
+            background: #FAFAFA;
+            border-radius: 8px;
+            border: 1px solid var(--color-border);
+            transition: var(--transition);
+            overflow: hidden;
+        }
+
+        .menu-item-image {
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .menu-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-slow);
+        }
+
+        .menu-item:hover .menu-item-image img {
+            transform: scale(1.08);
+            filter: brightness(1.05);
+        }
+
+        .menu-item-content {
+            padding: 2rem;
+        }
+
+        .menu-item:hover {
+            background: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transform: translateY(-5px);
+        }
+
+        .menu-item-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--color-charcoal);
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-item-description {
+            color: var(--color-olive);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .menu-item-price {
+            color: var(--color-terracotta);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        /* ===== GALLERY SECTION ===== */
+        .gallery {
+            padding: 6rem 2rem;
+            background: #FAFAFA;
+        }
+
+        .gallery-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, var(--color-terracotta) 0%, var(--color-gold) 100%);
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+            transition: var(--transition-slow);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-slow);
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 50px rgba(198, 93, 59, 0.2);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(30, 30, 30, 0);
+            transition: var(--transition);
+            z-index: 1;
+        }
+
+        .gallery-item:hover::after {
+            background: rgba(30, 30, 30, 0.1);
+        }
+
+        /* ===== TESTIMONIAL SECTION ===== */
+        .testimonial {
+            padding: 6rem 2rem;
+            background: white;
+            text-align: center;
+        }
+
+        .testimonial-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .testimonial-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--color-charcoal);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            font-weight: 700;
+        }
+
+        .testimonial-author {
+            color: var(--color-terracotta);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .testimonial-role {
+            color: var(--color-olive);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        /* ===== CONTACT SECTION ===== */
+        .contact {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #FAFAFA 0%, #F5E9DC 100%);
+        }
+
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .contact-info h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--color-charcoal);
+            margin-bottom: 2rem;
+        }
+
+        .contact-item {
+            margin-bottom: 2rem;
+        }
+
+        .contact-label {
+            color: var(--color-terracotta);
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-value {
+            color: var(--color-charcoal);
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--color-border);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--color-charcoal);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            font-family: 'Sora', sans-serif;
+            font-size: 0.95rem;
+            color: var(--color-charcoal);
+            transition: var(--transition);
+            background: #FAFAFA;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--color-terracotta);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(198, 93, 59, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--color-terracotta);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: var(--transition);
+            letter-spacing: 0.5px;
+        }
+
+        .form-submit:hover {
+            background-color: #B84E2F;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(198, 93, 59, 0.3);
+        }
+
+        .form-error {
+            color: #DC3545;
+            font-size: 0.8rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+
+        .form-group.error input,
+        .form-group.error textarea {
+            border-color: #DC3545;
+        }
+
+        .form-group.error .form-error {
+            display: block;
+        }
+
+        .form-success {
+            display: none;
+            background: #D4EDDA;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .form-success.show {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @media (max-width: 768px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-info h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background-color: var(--color-charcoal);
+            color: var(--color-beige);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--color-terracotta);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--color-beige);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--color-terracotta);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border: 1px solid var(--color-terracotta);
+            border-radius: 50%;
+            color: var(--color-terracotta);
+            text-decoration: none;
+            transition: var(--transition);
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .social-links a:hover {
+            background-color: var(--color-terracotta);
+            color: white;
+        }
+
+        .footer-copyright {
+            color: #999;
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(245, 233, 220, 0.1);
+            padding-top: 1.5rem;
+        }
+
+        /* ===== UTILITIES ===== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .fade-in.visible {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .hidden {
+            display: none;
+        }
+        .hero {
+          height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          color: #fff;
+
+          background: 
+            linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+             url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092') center/cover no-repeat;
+}
+.hero h1 {
+    color: #fff;
+}
+
+.hero p {
+    color: #eee;
+}
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">Mitti & Flame</div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Where Earth Meets Fire</h1>
+            <center><p>Experience the art of clay-pot cooking, rooted in tradition and crafted for the modern palate.</p>
+            <a href="#menu" class="cta-button">Explore Menu</a></center>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section class="about" id="about">
+        <div class="about-container">
+            <div class="about-text fade-in">
+                <h2>Our Story</h2>
+                <p>Mitti & Flame is born from a passion for traditional Indian cooking methods combined with contemporary dining sophistication. Each dish is a testament to the centuries-old art of clay-pot preparation.</p>
+                <p>Our name reflects our philosophy: "Mitti" (earth) represents the earthen clay vessels that define our cooking, while "Flame" symbolizes the controlled fire that transforms ingredients into culinary poetry.</p>
+                <p>We source the finest regional ingredients and employ time-honored techniques passed down through generations, bringing you an authentic experience unlike any other.</p>
+                <div class="tagline">Rooted in tradition. Crafted for today.</div>
+            </div>
+            <div class="about-visual fade-in" style="animation-delay: 0.2s;">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwOB0s0xMgwxn1m3QdAzQf1ihLJuAUxiAzFg&s" alt="Restaurant interior - Mitti & Flame" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPERIENCE SECTION -->
+    <section class="experience" id="experience">
+        <div class="experience-container">
+            <h2 class="section-title">Why Mitti & Flame</h2>
+            <p class="section-subtitle">Discover what sets us apart</p>
+            <div class="cards-grid">
+                <div class="card fade-in">
+                    <div class="card-icon">🏺</div>
+                    <h3>Clay-Pot Cooking</h3>
+                    <p>Authentic earthen vessels that infuse dishes with natural minerals and unparalleled flavor depth.</p>
+                </div>
+                <div class="card fade-in" style="animation-delay: 0.1s;">
+                    <div class="card-icon">🔥</div>
+                    <h3>Slow Fire Preparation</h3>
+                    <p>Meticulous temperature control and traditional slow-cooking methods that develop complex flavors.</p>
+                </div>
+                <div class="card fade-in" style="animation-delay: 0.2s;">
+                    <div class="card-icon">🌾</div>
+                    <h3>Regional Flavors</h3>
+                    <p>Curated recipes from diverse Indian regions, each carrying its own culinary heritage and story.</p>
+                </div>
+                <div class="card fade-in" style="animation-delay: 0.3s;">
+                    <div class="card-icon">✨</div>
+                    <h3>Premium Ambiance</h3>
+                    <p>An intimate space designed for connection, conversation, and the celebration of extraordinary food.</p>
+                </div>
+                <div class="card fade-in" style="animation-delay: 0.3s;">
+                    <div class="card-icon">🪔</div>
+                    <h3>Reserve Your Experience</h3>
+                    <p> Step into a space where tradition meets modern elegance.
+            Book your table and experience the warmth of Mitti & Flame.</p>
+                </div>
+                <div class="card fade-in" style="animation-delay: 0.3s;">
+                    <div class="card-icon">❤️</div>
+                    <h3> A Happy Guest</h3>
+                    <p>An unforgettable dining experience. The flavors feel like home,
+            yet the presentation is beautifully modern.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MENU SECTION -->
+    <section class="menu" id="menu">
+        <div class="menu-container">
+            <h2 class="section-title">Signature Menu</h2>
+            <p class="section-subtitle">Carefully curated selections</p>
+            
+            <div class="menu-tabs">
+                <button class="menu-tab active" data-category="starters">Starters</button>
+                <button class="menu-tab" data-category="mains">Main Course</button>
+                <button class="menu-tab" data-category="clay">Clay Specials</button>
+                <button class="menu-tab" data-category="desserts">Desserts</button>
+            </div>
+
+            <div class="menu-items" id="menuItems">
+                <!-- Menu items will be generated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- GALLERY SECTION -->
+    <section class="gallery" id="gallery">
+        <div class="gallery-container">
+            <h2 class="section-title">Our Space</h2>
+            <p class="section-subtitle">Captured moments of warmth and togetherness</p>
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Gallery items will be generated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIAL SECTION -->
+    <section class="testimonial">
+        <div class="testimonial-container">
+            <p class="testimonial-text">"A beautifully orchestrated symphony of flavors, each course telling a story of tradition and innovation."</p>
+            <div class="testimonial-author">Priya Sharma</div>
+            <div class="testimonial-role">Food Critic & Culinary Author</div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section class="contact" id="contact">
+        <div class="contact-container">
+            <div class="contact-info">
+                <h2>Get In Touch</h2>
+                <div class="contact-item">
+                    <div class="contact-label">Address</div>
+                    <div class="contact-value">42 Artisan Lane, Heritage Quarter<br>New Delhi, India 110001</div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-label">Phone</div>
+                    <div class="contact-value">+91 (11) 4567-8900</div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-label">Email</div>
+                    <div class="contact-value">hello@mittiandflame.com</div>
+                </div>
+            </div>
+
+            <form class="contact-form" id="contactForm">
+                <div class="form-success" id="formSuccess">Thank you! We'll be in touch shortly.</div>
+                
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                    <span class="form-error">Please enter your name</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                    <span class="form-error">Please enter a valid email</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required></textarea>
+                    <span class="form-error">Please enter your message</span>
+                </div>
+
+                <button type="submit" class="form-submit">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">Mitti & Flame</div>
+            
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#menu">Menu</a>
+                <a href="#experience">Experience</a>
+                <a href="#contact">Contact</a>
+            </div>
+
+            <div class="social-links">
+                <a href="#" title="Instagram">IG</a>
+                <a href="#" title="Facebook">FB</a>
+                <a href="#" title="Twitter">𝕏</a>
+                <a href="#" title="LinkedIn">In</a>
+            </div>
+
+            <div class="footer-copyright">
+                © 2024 Mitti & Flame. All rights reserved. | Crafted with passion and tradition.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ===== MENU DATA =====
+        const menuData = {
+            starters: [
+                {
+                    name: "Harissa Infused Tandoori Vegetables",
+                    description: "Clay-roasted seasonal vegetables with smoky spices",
+                    price: "₹380",
+                    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500&h=400&fit=crop"
+                },
+                {
+                    name: "Methi Murg Tikka",
+                    description: "Fenugreek-marinated chicken with herbs and fire-kissed finish",
+                    price: "₹480",
+                    image: "https://www.cubesnjuliennes.com/wp-content/uploads/2023/11/Methi-Chicken-Recipe-500x500.jpg"
+                },
+                {
+                    name: "Baingan Bharta",
+                    description: "Roasted eggplant in traditional clay vessel with tomato and spices",
+                    price: "₹320",
+                    image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&h=400&fit=crop"
+                }
+            ],
+            mains: [
+                {
+                    name: "Rogan Josh - Clay Special",
+                    description: "Slow-cooked lamb in aromatic tomato reduction, cooked in earthen handi",
+                    price: "₹680",
+                    image: "https://thewildepicurean.com/wp-content/uploads/2025/04/rogannew.webp"
+                },
+                {
+                    name: "Chettinad Chicken Curry",
+                    description: "Southern spice blend with dried chilies and coconut, traditional clay preparation",
+                    price: "₹620",
+                    image: "https://images.unsplash.com/photo-1541519227354-08fa5d50c44d?w=500&h=400&fit=crop"
+                },
+                {
+                    name: "Hyderabadi Biryani",
+                    description: "Fragrant basmati rice with meat and saffron, slow-cooked in sealed clay pot",
+                    price: "₹580",
+                    image: "https://www.licious.in/blog/wp-content/uploads/2020/12/Hyderabadi-chicken-Biryani.jpg"
+                }
+            ],
+            clay: [
+                {
+                    name: "Handi Paneer Tikka Masala",
+                    description: "Cottage cheese cooked in clay handi with creamy tomato sauce",
+                    price: "₹520",
+                    image: "https://cdn1.foodviva.com/static-content/food-images/curry-recipes/paneer-tikka-masala-recipe/paneer-tikka-masala-recipe.jpg"
+                },
+                {
+                    name: "Murgh Makhani - Firelit",
+                    description: "Butter chicken prepared with traditional clay-pot slow cooking",
+                    price: "₹640",
+                    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvwYDekK4sjqR9XjyYpK1ZFJQH44dWaqKy4Q&s"
+                },
+                {
+                    name: "Kali Dal Mitti Me",
+                    description: "Black lentil curry cooked for hours in clay vessel, finished with ghee and cream",
+                    price: "₹380",
+                    image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&h=400&fit=crop"
+                }
+            ],
+            desserts: [
+                {
+                    name: "Kheer - Slow Infused",
+                    description: "Rice pudding with cardamom, saffron, and nuts, made in traditional manner",
+                    price: "₹240",
+                    image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=500&h=400&fit=crop"
+                },
+                {
+                    name: "Gulab Jamun",
+                    description: "Soft milk solids soaked in rose and cardamom syrup",
+                    price: "₹220",
+                    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzXpP8vNQ1BP2oTN2pDuhlEl9f-bs86gZAYw&s"
+                },
+                {
+                    name: "Phirni",
+                    description: "Ground rice pudding infused with rose water and topped with silver foil",
+                    price: "₹260",
+                    image: "https://images.unsplash.com/photo-1580959375944-abd7e991f971?w=500&h=400&fit=crop"
+                }
+            ]
+        };
+
+        // ===== INITIALIZE MENU =====
+        function loadMenu(category = 'starters') {
+            const menuItems = document.getElementById('menuItems');
+            menuItems.innerHTML = '';
+            
+            menuData[category].forEach((item, index) => {
+                const menuItem = document.createElement('div');
+                menuItem.className = 'menu-item fade-in';
+                menuItem.style.animationDelay = `${index * 0.1}s`;
+                menuItem.innerHTML = `
+                    <div class="menu-item-image">
+                        <img src="${item.image}" alt="${item.name}" loading="lazy">
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-name">${item.name}</div>
+                        <div class="menu-item-description">${item.description}</div>
+                        <div class="menu-item-price">${item.price || 'Price on Request'}</div>
+                    </div>
+                `;
+                menuItems.appendChild(menuItem);
+            });
+
+            // Trigger fade-in animation
+            setTimeout(() => {
+                document.querySelectorAll('.menu-item').forEach(item => {
+                    item.classList.add('visible');
+                });
+            }, 50);
+        }
+
+        // ===== MENU TABS =====
+        document.querySelectorAll('.menu-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                loadMenu(tab.dataset.category);
+            });
+        });
+
+        // ===== INITIALIZE GALLERY =====
+        function initializeGallery() {
+            const galleryGrid = document.getElementById('galleryGrid');
+            const galleryImages = [
+                "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&h=600&fit=crop",
+                "https://thedasaprakash.com/assets/img/gallery/connaught-place/Dasaprakash-cp-2.jpg",
+                "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&h=600&fit=crop",
+                "https://media.istockphoto.com/id/1081422898/photo/pan-fried-duck.jpg?s=612x612&w=0&k=20&c=kzlrX7KJivvufQx9mLd-gMiMHR6lC2cgX009k9XO6VA=",
+                "https://images.unsplash.com/photo-1495521821757-a1efb6729352?w=600&h=600&fit=crop",
+                "https://media.istockphoto.com/id/1428412216/photo/a-male-chef-pouring-sauce-on-meal.jpg?s=612x612&w=0&k=20&c=8U3mrgWsuB7pB8axtGj89MXRkHDKodEli9F6wKgPT4A=",
+                "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&h=600&fit=crop",
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRzMx8vZ3mbZxLykTTNYmG0rQWUbZxogtqtg&s"
+            ];
+
+            galleryImages.forEach((image, index) => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item fade-in';
+                item.style.animationDelay = `${index * 0.08}s`;
+                item.innerHTML = `<img src="${image}" alt="Restaurant gallery image ${index + 1}" loading="lazy">`;
+                galleryGrid.appendChild(item);
+            });
+        }
+
+        // ===== NAVBAR SCROLL EFFECT =====
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // ===== MOBILE MENU TOGGLE =====
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // ===== INTERSECTION OBSERVER FOR SCROLL ANIMATIONS =====
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // ===== FORM VALIDATION =====
+        const contactForm = document.getElementById('contactForm');
+        const formSuccess = document.getElementById('formSuccess');
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function clearErrors() {
+            document.querySelectorAll('.form-group').forEach(group => {
+                group.classList.remove('error');
+            });
+        }
+
+        function validateForm() {
+            clearErrors();
+            let isValid = true;
+
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            if (!name) {
+                document.getElementById('name').parentElement.classList.add('error');
+                isValid = false;
+            }
+
+            if (!email || !validateEmail(email)) {
+                document.getElementById('email').parentElement.classList.add('error');
+                isValid = false;
+            }
+
+            if (!message) {
+                document.getElementById('message').parentElement.classList.add('error');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            if (validateForm()) {
+                formSuccess.classList.add('show');
+                contactForm.reset();
+                
+                setTimeout(() => {
+                    formSuccess.classList.remove('show');
+                }, 3000);
+            }
+        });
+
+        // ===== OBSERVE FADE-IN ELEMENTS =====
+        document.addEventListener('DOMContentLoaded', () => {
+            loadMenu('starters');
+            initializeGallery();
+
+            document.querySelectorAll('.fade-in').forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>
+</body>
+</html>
